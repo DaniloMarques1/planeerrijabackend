@@ -1,18 +1,21 @@
 import { Request, Response } from 'express';
-import {getRepository} from 'typeorm';
-
-import {User} from '../entity/User';
+import { UserService } from '../service/userService';
+import { GeneralError } from '../utils/generalError';
 
 export class UserController {
   async addUser(req: Request, res: Response): Promise<Response> {
-    // TODO: adicionar validacao com o ajv
-    const {name, email, password, birthDate} = req.body;
-    const user = new User(name, email, birthDate);
-    user.passwordHash = user.hashPassword(password);
+    try {
+      const {name, email, password, birthDate} = req.body;
+      const user = await UserService.addUser({name, email, password, birthDate});
 
-    const userRepository = getRepository(User);
-    userRepository.save(user);
+      return res.json({user});
+    } catch(e) {
+      console.log(typeof(e));
+      if (e instanceof GeneralError) {
+        return res.status(400).json(e);
+      }
 
-    return res.json({user});
+      return res.status(400).json({message: 'Unexpected error'});
+    }
   }
 }

@@ -18,7 +18,7 @@ export class User {
     @Column()
     passwordHash: string
 
-    // TODO como salvar apenas o yyyy-MM-dd
+    // TODO salvar apenas o yyyy-MM-dd, validando com o ajv
     @Column()
     birthDate: string;
 

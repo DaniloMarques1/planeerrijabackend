@@ -1,5 +1,4 @@
 import * as express from 'express';
-
 import { routes } from './routes';
 
 export class App {
