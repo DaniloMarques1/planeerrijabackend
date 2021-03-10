@@ -1,7 +1,7 @@
 import { getRepository } from 'typeorm';
 import { User } from '../entity/User';
 import { UserBody } from '../interfaces/UserBody';
-import {Helper} from '../utils/helper';
+import { Helper } from '../utils/helper';
 import { GeneralError } from '../utils/generalError';
 import {userRegisterSchema} from '../schemas/UserRegister';
 

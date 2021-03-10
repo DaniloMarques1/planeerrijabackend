@@ -14,6 +14,7 @@ export class App {
   }
 
   private middleware(): void {
+    // TODO cors
     this.app.use(express.json());
     this.app.use(routes);
   }
