@@ -4,6 +4,7 @@ import { UserBody } from '../interfaces/UserBody';
 import { Helper } from '../utils/helper';
 import { GeneralError } from '../utils/generalError';
 import {userRegisterSchema} from '../schemas/UserRegister';
+import { Login } from '../interfaces/Login';
 
 export class UserService {
   static async addUser(userBody: UserBody): Promise<User> {
@@ -25,4 +26,9 @@ export class UserService {
 
     return user;
   }
+
+  static async createSession(): Promise<Login> {
+    // TODO
+  }
+
 }

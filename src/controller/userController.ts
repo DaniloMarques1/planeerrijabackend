@@ -8,7 +8,6 @@ export class UserController {
       const user = await UserService.addUser(req.body);
       return res.status(201).json({user});
     } catch(e) {
-      console.log(typeof(e));
       if (e instanceof GeneralError) {
         return res.status(400).json(e);
       }
@@ -16,4 +15,9 @@ export class UserController {
       return res.status(400).json({message: 'Unexpected error'});
     }
   }
+
+  async createSession(req: Request, res: Response): Promise<Response> {
+    // TODO
+  }
+
 }
