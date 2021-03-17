@@ -6,5 +6,6 @@ const routes = Router();
 const userController = new UserController();
 
 routes.post('/user', userController.addUser);
+routes.post('/session', userController.createSession);
 
 export { routes };
