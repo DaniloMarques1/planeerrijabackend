@@ -1,5 +1,5 @@
 import { getRepository } from 'typeorm';
-import { User } from '../entity/User';
+import { Employee } from '../entity/Employee';
 import { UserBody } from '../interfaces/UserBody';
 import { Helper } from '../utils/helper';
 import { GeneralError } from '../utils/generalError';
@@ -10,25 +10,26 @@ import * as jwt from 'jsonwebtoken';
 import {Constants} from '../utils/constants';
 import {Payload} from '../interfaces/Payload';
 
-export class UserService {
-  static async addUser(userBody: UserBody): Promise<User> {
+export class EmployeeService {
+
+  static async addEmployee(userBody: UserBody): Promise<Employee> {
     const errors = Helper.validateData(userBody, userRegisterSchema);
     if (errors && errors .length > 0) {
       console.log(errors);
       throw new GeneralError('Invalid body', Helper.getErrors(errors));
     }
 
-    const userRepository = getRepository(User);
-    const userExist =  await userRepository.findOne({email: userBody.email});
-    if (userExist) {
+    const employeeRepository = getRepository(Employee);
+    const employeeExist =  await employeeRepository.findOne({email: userBody.email});
+    if (employeeExist) {
       throw new GeneralError('Email already used');
     }
 
-    const user = new User(userBody.name, userBody.email, userBody.birthDate);
-    user.passwordHash = user.hashPassword(userBody.password);
-    await userRepository.save(user);
+    const employee = new Employee(userBody.name, userBody.email, userBody.birthDate);
+    employee.passwordHash = employee.hashPassword(userBody.password);
+    await employeeRepository.save(employee);
 
-    return user;
+    return employee;
   }
 
   static async createSession(loginBody: Login): Promise<Payload> {
@@ -37,19 +38,19 @@ export class UserService {
       throw new GeneralError('Invalid body', Helper.getErrors(errors));
     }
 
-    const userRepository = getRepository(User);
-    const user =  await userRepository.findOne({email: loginBody.email});
-    if (!user) {
+    const employeeRepository = getRepository(Employee);
+    const employee =  await employeeRepository.findOne({email: loginBody.email});
+    if (!employee) {
       throw new GeneralError('Invalid email');
     }
 
-    if (!user.comparePassword(loginBody.password)) {
+    if (!employee.comparePassword(loginBody.password)) {
       throw new GeneralError('Invalid password');
     }
     //TODO make it better
-    const token = jwt.sign({id: user.id}, Constants.PRIVATE_KEY);
+    const token = jwt.sign({id: employee.id}, Constants.PRIVATE_KEY);
     
-    return <Payload>{token, user};
+    return <Payload>{token, employee};
   }
 
 }

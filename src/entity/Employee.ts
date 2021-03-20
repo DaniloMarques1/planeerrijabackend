@@ -4,7 +4,7 @@ import * as bcrypt from 'bcrypt';
 import {Constants} from '../utils/constants';
 
 @Entity()
-export class User {
+export class Employee {
 
     @PrimaryGeneratedColumn()
     id: number;
@@ -18,7 +18,7 @@ export class User {
     @Column()
     passwordHash: string
 
-    // TODO salvar apenas o yyyy-MM-dd, validando com o ajv
+    // TODO remover?
     @Column()
     birthDate: string;
 

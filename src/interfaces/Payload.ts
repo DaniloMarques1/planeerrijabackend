@@ -1,6 +1,6 @@
-import { User } from '../entity/User';
+import { Employee } from '../entity/Employee';
 
 export interface Payload {
   token: string;
-  user: User;
+  employee: Employee;
 }

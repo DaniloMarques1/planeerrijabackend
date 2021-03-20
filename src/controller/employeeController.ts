@@ -1,14 +1,15 @@
 import { Request, Response } from 'express';
-import { UserService } from '../service/userService';
+import { EmployeeService } from '../service/employeeService';
 import { GeneralError } from '../utils/generalError';
-import {Login} from '../interfaces/Login';
 
-export class UserController {
-  async addUser(req: Request, res: Response): Promise<Response> {
+export class EmployeeController {
+  async addEmployee(req: Request, res: Response): Promise<Response> {
     try {
       console.log(req.body);
-      const user = await UserService.addUser(req.body);
-      return res.status(201).json({user});
+
+      const employee = await EmployeeService.addEmployee(req.body);
+      return res.status(201).json({employee});
+
     } catch(e) {
       if (e instanceof GeneralError) {
         return res.status(400).json(e);
@@ -20,13 +21,12 @@ export class UserController {
 
   async createSession(req: Request, res: Response): Promise<Response> {
     try {
-      const payload = await UserService.createSession(req.body);
+      const payload = await EmployeeService.createSession(req.body);
       return res.json(payload);
     } catch(e) {
       // TODO
+      return res.status(400).json({});
     }
-
-    return res.status(400).json({});
   }
 
 }

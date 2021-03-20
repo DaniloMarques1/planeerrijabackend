@@ -1,11 +1,11 @@
 import { Router } from 'express';
-import {UserController} from './controller/userController';
+import {EmployeeController} from './controller/employeeController';
 
 const routes = Router();
 
-const userController = new UserController();
+const employeeController = new EmployeeController();
 
-routes.post('/user', userController.addUser);
-routes.post('/session', userController.createSession);
+routes.post('/employee', employeeController.addEmployee);
+routes.post('/session', employeeController.createSession);
 
 export { routes };
