@@ -13,10 +13,8 @@ import {Payload} from '../interfaces/Payload';
 export class EmployeeService {
 
   static async addEmployee(userBody: UserBody): Promise<Employee> {
-    console.log(userBody);
     const errors = Helper.validateData(userBody, employeeRegistrationSchema);
     if (errors && errors .length > 0) {
-      console.log(errors);
       throw new GeneralError('Invalid body', Helper.getErrors(errors));
     }
 

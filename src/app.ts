@@ -1,6 +1,8 @@
 import * as express from 'express';
 import { routes } from './routes';
 
+import * as cors from 'cors';
+
 export class App {
   private app: express.Application;
 
@@ -14,8 +16,8 @@ export class App {
   }
 
   private middleware(): void {
-    // TODO cors
     this.app.use(express.json());
+    this.app.use(cors());
     this.app.use(routes);
   }
 }
