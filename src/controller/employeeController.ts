@@ -5,7 +5,6 @@ import { GeneralError } from '../utils/generalError';
 export class EmployeeController {
   async addEmployee(req: Request, res: Response): Promise<Response> {
     try {
-      console.log(req.body);
 
       const employee = await EmployeeService.addEmployee(req.body);
       return res.status(201).json({employee});
@@ -24,8 +23,7 @@ export class EmployeeController {
       const payload = await EmployeeService.createSession(req.body);
       return res.json(payload);
     } catch(e) {
-      // TODO
-      return res.status(400).json({});
+      return res.status(400).json(e);
     }
   }
 

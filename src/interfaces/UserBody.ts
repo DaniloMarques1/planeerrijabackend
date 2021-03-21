@@ -1,6 +1,8 @@
+import {JobType} from '../entity/Employee';
+
 export interface UserBody {
   name: string;
   email: string;
-  birthDate: string;
+  type: JobType;
   password: string;
 }

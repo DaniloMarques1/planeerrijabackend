@@ -1,7 +1,9 @@
-export const userRegisterSchema = {
-  $id: 'userRegister',
+import {JobType} from '../entity/Employee';
+
+export const employeeRegistrationSchema = {
+  $id: 'employeeRegistrationSchema',
   type: 'object',
-  required: ['name', 'email', 'password', 'birthDate'],
+  required: ['name', 'email', 'password', 'type'],
   properties: {
     name: {
       type: 'string'
@@ -14,9 +16,9 @@ export const userRegisterSchema = {
       type: 'string',
       minLength: 6
     },
-    birthDate: {
+    type: {
       type: 'string',
-      format: 'date'
+      enum: [JobType.VET, JobType.REC]
     }
   }
 }

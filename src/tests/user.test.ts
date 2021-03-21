@@ -2,6 +2,7 @@ import { Connection, createConnection } from 'typeorm';
 import { UserBody } from '../interfaces/UserBody';
 import axios, { AxiosInstance } from 'axios';
 import {Login} from '../interfaces/Login';
+import {JobType} from '../entity/Employee';
 
 
 function getRequest(url: string = 'http://127.0.0.1:8080'): AxiosInstance {
@@ -27,17 +28,17 @@ describe("It will sign up and sign in a user", () => {
 
   test("Should sign up a user", async () => {
     // TODO
-    const user = <UserBody>{name: "Fitz", email: "fitz@gmail.com", password: "123456", birthDate: "1999-06-27"};
+    const user = <UserBody>{name: "Fitz", email: "fitz@gmail.com", password: "123456", type: "VET"};
     const request = getRequest();
     const response = await request.post('/employee', user);
 
     expect(response.status).toBe(201);
     expect(response.data.employee.name).toBe("Fitz");
+    expect(response.data.employee.type).toBe("VET");
   });
 
   test("Should sign in a user and get a token back", async () => {
-    // TODO
-    const user = <UserBody>{name: "Fitz", email: "fitz@gmail.com", password: "123456", birthDate: "1999-06-27"};
+    const user = <UserBody>{name: "Fitz", email: "fitz@gmail.com", password: "123456", type: "VET"};
     const request = getRequest();
     await request.post('/employee', user);
 
@@ -46,5 +47,33 @@ describe("It will sign up and sign in a user", () => {
 
     expect(response.status).toBe(200);
     expect(response.data.token).toBeDefined();
+    expect(response.data.employee).toBeDefined();
+  });
+
+  test("Should return 400 because of invalid email", async () => {
+    const user = <UserBody>{name: "Fitz", email: "fitz@gmail.com", password: "123456", type: "VET"};
+    const request = getRequest();
+    await request.post('/employee', user);
+
+    const login = <Login>{email: 'dan@gmail.com', password: '123456'}; 
+    request.post('/session', login).catch(e => {
+
+      expect(e.response.status).toBe(400);
+      expect(e.response.data.message).toBe("Invalid email");
+    });
+  });
+
+  test("Should return 400 because of invalid password", async () => {
+    const user = <UserBody>{name: "Fitz", email: "fitz@gmail.com", password: "123456", type: "VET"};
+    const request = getRequest();
+    await request.post('/employee', user);
+
+    // TODO fix
+    const login = <Login>{email: 'fitz@gmail.com', password: 'fitz'}; 
+    request.post('/session', login).catch(e => {
+
+      expect(e.response.status).toBe(400);
+      expect(e.response.data.message).toBe("Invalid password");
+    });
   });
 });

@@ -3,6 +3,11 @@ import * as bcrypt from 'bcrypt';
 
 import {Constants} from '../utils/constants';
 
+export enum JobType {
+    VET = 'VET',
+    REC = 'REC'
+}
+
 @Entity()
 export class Employee {
 
@@ -18,14 +23,13 @@ export class Employee {
     @Column()
     passwordHash: string
 
-    // TODO remover?
     @Column()
-    birthDate: string;
+    type: JobType
 
-    constructor(name: string, email: string, birthDate: string) {
+    constructor(name: string, email: string, type: JobType) {
       this.name = name;
       this.email = email;
-      this.birthDate = birthDate;
+      this.type = type;
     }
 
     hashPassword(password: string): string {
