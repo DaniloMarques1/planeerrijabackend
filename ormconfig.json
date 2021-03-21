@@ -1,10 +1,10 @@
 {
-   "type": "postgres",
+   "type": "ec2-54-161-239-198.compute-1.amazonaws.com",
    "host": "0.0.0.0",
    "port": 5432,
-   "username": "fitz",
-   "password": "123Mudar",
-   "database": "planeerrija",
+   "username": "tcsbvroorgvrlk",
+   "password": "abc0dae6dbdfa964d9b9a553bf9c7d59a57584284ae59537e176726ae57c0564",
+   "database": "d9vvj3s3r1vqpq",
    "synchronize": true,
    "logging": false,
    "entities": [
