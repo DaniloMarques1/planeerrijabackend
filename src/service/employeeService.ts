@@ -3,8 +3,8 @@ import { Employee, JobType } from '../entity/Employee';
 import { UserBody } from '../interfaces/UserBody';
 import { Helper } from '../utils/helper';
 import { GeneralError } from '../utils/generalError';
-import {employeeRegistrationSchema} from '../schemas/EmployeeRegister';
-import {userLoginSchema} from '../schemas/EmployeeLogin';
+import { employeeRegistrationSchema } from '../schemas/EmployeeRegister';
+import { userLoginSchema } from '../schemas/EmployeeLogin';
 import { Login } from '../interfaces/Login';
 import * as jwt from 'jsonwebtoken';
 import {Constants} from '../utils/constants';
@@ -40,13 +40,10 @@ export class EmployeeService {
 
     const employeeRepository = getRepository(Employee);
     const employee =  await employeeRepository.findOne({email: loginBody.email});
-    console.log(employee);
     if (!employee) {
-      console.log("ERRRO email!!!");
       throw new GeneralError('Invalid email');
     }
     if (!employee.comparePassword(loginBody.password)) {
-      console.log("ERRRO!!!");
       throw new GeneralError('Invalid password');
     }
 
