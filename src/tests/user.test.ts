@@ -27,7 +27,6 @@ describe("It will sign up and sign in a user", () => {
   });
 
   test("Should sign up a user", async () => {
-    // TODO
     const user = <UserBody>{name: "Fitz", email: "fitz@gmail.com", password: "123456", type: "VET"};
     const request = getRequest();
     const response = await request.post('/employee', user);
@@ -35,6 +34,19 @@ describe("It will sign up and sign in a user", () => {
     expect(response.status).toBe(201);
     expect(response.data.employee.name).toBe("Fitz");
     expect(response.data.employee.type).toBe("VET");
+  });
+
+  test("Should not sign up a user", async () => {
+    try {
+
+      const user = {name: "Fitz", email: "fitz@gmail.com", password: "123456", type: "BET"};
+      const request = getRequest();
+      await request.post('/employee', user);
+
+    } catch(e) {
+      expect(e.response.status).toBe(400);
+      expect(e.response.data).toBeDefined();
+    }
   });
 
   test("Should sign in a user and get a token back", async () => {
@@ -51,29 +63,33 @@ describe("It will sign up and sign in a user", () => {
   });
 
   test("Should return 400 because of invalid email", async () => {
-    const user = <UserBody>{name: "Fitz", email: "fitz@gmail.com", password: "123456", type: "VET"};
-    const request = getRequest();
-    await request.post('/employee', user);
+    try {
+      const user = <UserBody>{name: "Fitz", email: "fitz@gmail.com", password: "123456", type: "VET"};
+      const request = getRequest();
+      await request.post('/employee', user);
 
-    const login = <Login>{email: 'dan@gmail.com', password: '123456'}; 
-    request.post('/session', login).catch(e => {
+      const login = <Login>{email: 'dan@gmail.com', password: '123456'}; 
 
+      await request.post('/session', login);
+    } catch(e) {
       expect(e.response.status).toBe(400);
       expect(e.response.data.message).toBe("Invalid email");
-    });
+    }
+  
   });
 
   test("Should return 400 because of invalid password", async () => {
-    const user = <UserBody>{name: "Fitz", email: "fitz@gmail.com", password: "123456", type: "VET"};
-    const request = getRequest();
-    await request.post('/employee', user);
+    try {
+      const user = <UserBody>{name: "Fitz", email: "fitz@gmail.com", password: "123456", type: "VET"};
+      const request = getRequest();
+      await request.post('/employee', user);
 
-    // TODO fix
-    const login = <Login>{email: 'fitz@gmail.com', password: 'fitz'}; 
-    request.post('/session', login).catch(e => {
+      const login = <Login>{email: 'fitz@gmail.com', password: 'fitz'}; 
+      await request.post('/session', login);
 
+    } catch(e) {
       expect(e.response.status).toBe(400);
       expect(e.response.data.message).toBe("Invalid password");
-    });
+    }
   });
 });
