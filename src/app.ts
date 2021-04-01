@@ -3,6 +3,7 @@ import { routes } from './routes';
 
 import * as cors from 'cors';
 
+
 export class App {
   private app: express.Application;
 
@@ -20,4 +21,5 @@ export class App {
     this.app.use(cors());
     this.app.use(routes);
   }
+
 }

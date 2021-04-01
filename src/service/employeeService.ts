@@ -1,4 +1,3 @@
-import { getRepository } from 'typeorm';
 import { Employee, JobType } from '../entity/Employee';
 import { UserBody } from '../interfaces/UserBody';
 import { Helper } from '../utils/helper';
@@ -9,6 +8,7 @@ import { Login } from '../interfaces/Login';
 import * as jwt from 'jsonwebtoken';
 import {Constants} from '../utils/constants';
 import {Payload} from '../interfaces/Payload';
+import {EmployeeRepository} from '../repository/employeeRepository';
 
 export class EmployeeService {
 
@@ -18,17 +18,14 @@ export class EmployeeService {
       throw new GeneralError('Invalid body', Helper.getErrors(errors));
     }
 
-    const employeeRepository = getRepository(Employee);
-    const employeeExist =  await employeeRepository.findOne({email: userBody.email});
+    const employeeExist =  await EmployeeRepository.findEmployeeByEmail(userBody.email);
     if (employeeExist) {
       throw new GeneralError('Email already used');
     }
 
     const employee = new Employee(userBody.name, userBody.email, JobType[userBody.type]);
-    employee.passwordHash = employee.hashPassword(userBody.password);
-    await employeeRepository.save(employee);
-
-    return employee;
+    employee.password_hash = Employee.hashPassword(userBody.password);
+    return await EmployeeRepository.save(employee);
   }
 
   static async createSession(loginBody: Login): Promise<Payload> {
@@ -37,12 +34,12 @@ export class EmployeeService {
       throw new GeneralError('Invalid body', Helper.getErrors(errors));
     }
 
-    const employeeRepository = getRepository(Employee);
-    const employee =  await employeeRepository.findOne({email: loginBody.email});
+    const employee =  await EmployeeRepository.findEmployeeByEmail(loginBody.email);
     if (!employee) {
       throw new GeneralError('Invalid email');
     }
-    if (!employee.comparePassword(loginBody.password)) {
+
+    if (!Employee.comparePassword(loginBody.password, employee.password_hash)) {
       throw new GeneralError('Invalid password');
     }
 
