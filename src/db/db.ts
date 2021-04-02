@@ -31,14 +31,7 @@ const tables = `
   );
 `
 
-//const client = new Client({
-//    host: process.env.DB_HOST,
-//    port: Number(process.env.DB_PORT),
-//    user: process.env.DB_USER,
-//    password: process.env.DB_PWD,
-//    database: process.env.DB_NAME
-//});
-
+/*
 const pool = new Pool({
     host: process.env.DB_HOST,
     port: Number(process.env.DB_PORT),
@@ -46,21 +39,21 @@ const pool = new Pool({
     password: process.env.DB_PWD,
     database: process.env.DB_NAME
 });
+*/
+
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: true
+  }
+});
+
+console.log(process.env.DATABASE_URL);
 
 async function createTables() {
+  await pool.query(jobType);
+  await pool.query(petType);
   await pool.query(tables);
 }
-
-/*
-function createTables(): Promise<any> {
-  //return client.query(tables);
-}
-
-async function connect() {
-  //await client.connect();
-  //await createType();
-  await createTables();
-}
-*/
 
 export { pool, createTables } 
