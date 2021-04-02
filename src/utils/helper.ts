@@ -20,8 +20,9 @@ export class Helper {
     });
   }
 
-  static async getPayload(token: string): Promise<number> {
-    const employeeId = await jwt.verify(token, Constants.PRIVATE_KEY);
-    return Number(employeeId);
+  static getPayload(token: string): string {
+    const payload = jwt.verify(token, Constants.PRIVATE_KEY);
+    const employeeId = payload["id"];
+    return employeeId;
   }
 }
