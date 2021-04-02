@@ -7,7 +7,7 @@ import {createTables} from './db/db';
 async function start() {
   await createTables();
   const app = new App();
-  app.run(8080);
+  app.run();
 }
 
 start();

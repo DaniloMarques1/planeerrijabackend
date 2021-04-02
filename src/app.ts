@@ -3,6 +3,8 @@ import { routes } from './routes';
 
 import * as cors from 'cors';
 
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 export class App {
   private app: express.Application;
@@ -12,8 +14,8 @@ export class App {
     this.middleware();
   }
 
-  public run(port: number): void {
-    this.app.listen(port);
+  public run(): void {
+    this.app.listen(process.env.PORT);
   }
 
   private middleware(): void {
