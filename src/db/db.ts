@@ -27,7 +27,10 @@ const tables = `
     owner_name VARCHAR(100) NOT NULL,
     pet_name VARCHAR(100) NOT NULL,
     pet_type pettype,
-    description text
+    description text,
+    active BOOLEAN DEFAULT true,
+    employee_id INT,
+    CONSTRAINT fk_employee_id FOREIGN KEY(employee_id) REFERENCES employee(id)
   );
 `
 
@@ -43,12 +46,8 @@ const pool = new Pool({
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
 });
 
-console.log(process.env.DATABASE_URL);
 
 async function createTables() {
   //await pool.query(jobType);

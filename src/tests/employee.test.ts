@@ -1,7 +1,5 @@
 import { UserBody } from '../interfaces/UserBody';
 import axios, { AxiosInstance } from 'axios';
-import {Login} from '../interfaces/Login';
-import {JobType} from '../entity/Employee';
 import { pool } from '../db/db';
 
 
@@ -10,7 +8,7 @@ function getRequest(url: string = 'http://127.0.0.1:8080'): AxiosInstance {
 }
 
 afterEach(async (done) => {
-  await pool.query("truncate table employee");
+  await pool.query("truncate table employee cascade");
   done();
 });
 
@@ -56,7 +54,7 @@ test("Should sign in", async () => {
 test("Should not sign in", async () => {
   const user = {name: "Fitz", email: "fitz@gmail.com", password: "123456", type: "VET"};
   const request = getRequest();
-  let response = await request.post('/employee', user);
+  await request.post('/employee', user);
   const login = {email: "fit@gmail.com", password: "123456"};
 
   try {

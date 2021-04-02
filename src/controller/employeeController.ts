@@ -10,6 +10,7 @@ export class EmployeeController {
       return res.status(201).json({employee});
 
     } catch(e) {
+      console.log(e);
       if (e instanceof GeneralError) {
         return res.status(400).json(e);
       }
@@ -23,6 +24,7 @@ export class EmployeeController {
       const payload = await EmployeeService.createSession(req.body);
       return res.json(payload);
     } catch(e) {
+      console.log(e);
       return res.status(400).json(e);
     }
   }

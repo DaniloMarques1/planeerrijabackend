@@ -1,5 +1,5 @@
 import * as express from 'express';
-import { routes } from './routes';
+import { routes } from './routes/';
 
 import * as cors from 'cors';
 
