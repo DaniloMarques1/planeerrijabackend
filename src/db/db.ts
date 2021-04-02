@@ -44,15 +44,15 @@ const pool = new Pool({
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: {
-    rejectUnauthorized: true
+    rejectUnauthorized: false
   }
 });
 
 console.log(process.env.DATABASE_URL);
 
 async function createTables() {
-  await pool.query(jobType);
-  await pool.query(petType);
+  //await pool.query(jobType);
+  //await pool.query(petType);
   await pool.query(tables);
 }
 
