@@ -1,6 +1,6 @@
 export enum PetType {
-  CAT,
-  DOG
+  CAT = "CAT",
+  DOG = "DOG"
 }
 
 export class Appointment {
