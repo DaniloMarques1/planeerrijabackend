@@ -30,7 +30,7 @@ test('Should make an appointment', async () => {
   const token = sessionResponse.data.token;
   const body = {owner_name: 'Fitz', pet_name: 'Aurora', pet_type: 'CAT', description: 'Consulta de rotina'};
   const response = await request.post('/appointment', body, {headers: {
-    token: `Bearer ${token}`
+    Authorization: `Bearer ${token}`
   }});
 
   expect(response.status).toBe(201);
@@ -51,15 +51,15 @@ test("Should return all active appointments", async () => {
   const token = sessionResponse.data.token;
   const appointment1 = {owner_name: 'Fitz', pet_name: 'Aurora', pet_type: 'CAT', description: 'Consulta de rotina'};
   await request.post('/appointment', appointment1, {headers: {
-    token: `Bearer ${token}`
+    Authorization: `Bearer ${token}`
   }});
 
   const appointment2 = {owner_name: 'Fitz', pet_name: 'Aurora', pet_type: 'CAT', description: 'Consulta de rotina'};
   await request.post('/appointment', appointment2, {headers: {
-    token: `Bearer ${token}`
+    Authorization: `Bearer ${token}`
   }});
 
-  const appointmentsResponse = await request.get("/appointment", {headers: {token: `Bearer ${token}`}});
+  const appointmentsResponse = await request.get("/appointment", {headers: {Authorization: `Bearer ${token}`}});
 
   expect(appointmentsResponse.status).toBe(200);
   expect(appointmentsResponse.data.length).toBe(2);
