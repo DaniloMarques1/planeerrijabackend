@@ -53,8 +53,8 @@ const pool = new Pool({
 
 
 async function createTables() {
-  //await pool.query(jobType);
-  //await pool.query(petType);
+  await pool.query(jobType);
+  await pool.query(petType);
   await pool.query(tables);
 }
 
