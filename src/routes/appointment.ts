@@ -11,4 +11,6 @@ appointmentRouter.use(authMiddleware);
 appointmentRouter.post('/appointment', appointmentController.createAppointment);
 appointmentRouter.get('/appointment', appointmentController.getActiveAppointment);
 
+appointmentRouter.get('/appointment/next/:id', appointmentController.getNextAppointment);
+
 export {appointmentRouter}

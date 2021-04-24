@@ -17,11 +17,21 @@ export class AppointmentController {
 
   async getActiveAppointment(req: Request, res: Response) {
     try {
-      const employeeId = <string>req.headers["id"];
-      const appointments = await AppointmentService.getActiveAppointment(Number(employeeId));
+      const appointments = await AppointmentService.getActiveAppointment();
       return res.status(200).json(appointments);
     } catch(e) {
       return res.status(400).json(e);
     }
   }
+
+  // will return the next one selected and the last three
+	async getNextAppointment(req: Request, res: Response) {
+		try {
+			const { id } = req.params;
+			const response = await AppointmentService.getNextAppointment(Number(id));
+			return res.json(response);
+		} catch(e) {
+			return res.status(400).json(e);
+		}
+	}
 }

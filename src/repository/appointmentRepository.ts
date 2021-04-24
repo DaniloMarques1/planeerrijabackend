@@ -11,4 +11,17 @@ export class AppointmentRepository {
   static async getActiveAppointment(): Promise<Array<Appointment>> {
     return (await pool.query("select * from appointment where active = true")).rows;
   }
+
+	static async getNextAppointment(ids: Array<number>): Promise<Array<Appointment>> {
+		return (await pool.query("select * from appointment where id = $1 or id = $2 or id = $3",
+														 [...ids])).rows;
+	}
+
+	static async findById(id: number): Promise<Appointment> {
+		return (await pool.query("select * from appointment where id = $1", [id])).rows[0];
+	}
+
+	static async inactiveAppoitment(id: number): Promise<Appointment> {
+		return (await pool.query("update appointment set active = false where id = $1 returning *", [id])).rows[0];
+	}
 }
