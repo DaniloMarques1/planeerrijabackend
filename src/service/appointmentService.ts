@@ -23,33 +23,33 @@ export class AppointmentService {
     return appointments;
   }
 
-	static async getNextAppointment(appointmentId: number) {
-		try {
-			console.log("service...");
-			let previous = JSON.parse(fs.readFileSync(".previous", "utf-8"));
-			if (!previous) {
-				previous = new Array<number>();
-			}
-			let nextAppointment = await AppointmentRepository.findById(appointmentId);
-			if (!nextAppointment) {
-				throw new GeneralError("Appointment not found"); 
-			}
+  static async getNextAppointment(appointmentId: number) {
+    try {
+      console.log("service...");
+      let previous = JSON.parse(fs.readFileSync(".previous", "utf-8"));
+      if (!previous) {
+        previous = new Array<number>();
+      }
+      let nextAppointment = await AppointmentRepository.findById(appointmentId);
+      if (!nextAppointment) {
+        throw new GeneralError("Appointment not found"); 
+      }
 
-			const obj = {
-				next: nextAppointment,
-				previous: [...previous]
-			}
-			if (previous.length === 3) {
-				previous.shift();
-			}
+      const obj = {
+        next: nextAppointment,
+        previous: [...previous]
+      }
+      if (previous.length === 3) {
+        previous.shift();
+      }
 
-			nextAppointment = await AppointmentRepository.inactiveAppoitment(nextAppointment.id);
-			previous.unshift(nextAppointment);
-			fs.writeFileSync(".previous", JSON.stringify(previous), {encoding: "utf-8", flag: "w"});
+      nextAppointment = await AppointmentRepository.inactiveAppoitment(nextAppointment.id);
+      previous.unshift(nextAppointment);
+      fs.writeFileSync(".previous", JSON.stringify(previous), {encoding: "utf-8", flag: "w"});
 
-			return obj;
-		} catch(e) {
-			throw e;
-		}
-	}
+      return obj;
+    } catch(e) {
+      throw e;
+    }
+  }
 }
