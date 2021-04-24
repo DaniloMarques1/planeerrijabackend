@@ -30,8 +30,11 @@ export class AppointmentService {
 			if (!previous) {
 				previous = new Array<number>();
 			}
-
 			let nextAppointment = await AppointmentRepository.findById(appointmentId);
+			if (!nextAppointment) {
+				throw new GeneralError("Appointment not found"); 
+			}
+
 			const obj = {
 				next: nextAppointment,
 				previous: [...previous]
@@ -46,7 +49,7 @@ export class AppointmentService {
 
 			return obj;
 		} catch(e) {
-			console.log(e);
+			throw e;
 		}
 	}
 }
