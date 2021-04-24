@@ -18,7 +18,7 @@ export class EmployeeService {
       throw new GeneralError('Invalid body', Helper.getErrors(errors));
     }
 
-    const employeeExist =  await EmployeeRepository.findEmployeeByEmail(userBody.email);
+    const employeeExist = await EmployeeRepository.findEmployeeByEmail(userBody.email);
     if (employeeExist) {
       throw new GeneralError('Email already used');
     }
