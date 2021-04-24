@@ -4,6 +4,7 @@ export enum PetType {
 }
 
 export class Appointment {
+	id: number;
   owner_name: string;
   pet_name: string;
   pet_type: PetType;
