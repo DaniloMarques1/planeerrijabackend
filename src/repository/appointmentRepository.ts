@@ -24,4 +24,12 @@ export class AppointmentRepository {
   static async inactiveAppoitment(id: number): Promise<Appointment> {
     return (await pool.query("update appointment set active = false where id = $1 returning *", [id])).rows[0];
   }
+
+  static async removeAppointment(id: number) {
+    await pool.query("delete from appointment where id = $1", [id]);
+  }
+
+  static async getHistory(): Promise<Appointment[]> {
+    return (await pool.query("select * from appointment")).rows;
+  }
 }

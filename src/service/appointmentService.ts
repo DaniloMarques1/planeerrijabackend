@@ -1,11 +1,10 @@
 import {AppointmentRepository} from '../repository/appointmentRepository';
 import {Appointment} from '../entity/Appointment';
-import {EmployeeRepository} from '../repository/employeeRepository';
 import {GeneralError} from '../utils/generalError';
-import {Helper} from '../utils/helper';
 import {appointmentSchema} from '../schemas/Appointment';
 
 import * as fs from 'fs';
+import { Helper } from '../utils/helper';
 
 export class AppointmentService {
   static async create(appointmentBody: Appointment, employeeId: number): Promise<Appointment> {
@@ -39,6 +38,7 @@ export class AppointmentService {
         next: nextAppointment,
         previous: [...previous]
       }
+
       if (previous.length === 3) {
         previous.shift();
       }
@@ -51,5 +51,13 @@ export class AppointmentService {
     } catch(e) {
       throw e;
     }
+  }
+
+  static async getHistory() {
+    return await AppointmentRepository.getHistory();
+  }
+
+  static async removeAppointment(id: number) {
+    return await AppointmentRepository.removeAppointment(id);
   }
 }

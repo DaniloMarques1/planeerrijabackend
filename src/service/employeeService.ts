@@ -2,13 +2,13 @@ import { Employee, JobType } from '../entity/Employee';
 import { UserBody } from '../interfaces/UserBody';
 import { Helper } from '../utils/helper';
 import { GeneralError } from '../utils/generalError';
-import { employeeRegistrationSchema } from '../schemas/EmployeeRegister';
 import { userLoginSchema } from '../schemas/EmployeeLogin';
 import { Login } from '../interfaces/Login';
 import * as jwt from 'jsonwebtoken';
 import {Constants} from '../utils/constants';
 import {Payload} from '../interfaces/Payload';
 import {EmployeeRepository} from '../repository/employeeRepository';
+import { employeeRegistrationSchema } from '../schemas/EmployeeRegister';
 
 export class EmployeeService {
 

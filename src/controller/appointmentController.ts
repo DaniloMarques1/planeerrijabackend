@@ -34,4 +34,25 @@ export class AppointmentController {
 			return res.status(400).json(e);
 		}
 	}
+
+  async getHistory(req: Request, res: Response) {
+    try {
+      const appointments = await AppointmentService.getHistory();
+      return res.json(appointments);
+    } catch(e) {
+      console.log(e);
+    }
+  }
+
+  async removeAppointment(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+      await AppointmentService.removeAppointment(Number(id));
+      return res.status(204).json({});
+    } catch(e) {
+      console.log(e);
+    }
+  }
+
+
 }
