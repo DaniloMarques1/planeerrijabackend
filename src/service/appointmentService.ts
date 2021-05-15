@@ -29,12 +29,13 @@ export class AppointmentService {
       if (!previous) {
         previous = new Array<number>();
       }
-      let nextAppointment = await AppointmentRepository.findById(appointmentId);
+
+      const nextAppointment = await AppointmentRepository.inactiveAppoitment(appointmentId);
       if (!nextAppointment) {
         throw new GeneralError("Appointment not found"); 
       }
 
-      const obj = {
+      const response = {
         next: nextAppointment,
         previous: [...previous]
       }
@@ -42,12 +43,10 @@ export class AppointmentService {
       if (previous.length === 3) {
         previous.shift();
       }
-
-      nextAppointment = await AppointmentRepository.inactiveAppoitment(nextAppointment.id);
       previous.unshift(nextAppointment);
       fs.writeFileSync(".previous", JSON.stringify(previous), {encoding: "utf-8", flag: "w"});
 
-      return obj;
+      return response;
     } catch(e) {
       throw e;
     }

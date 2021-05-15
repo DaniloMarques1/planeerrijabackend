@@ -15,7 +15,7 @@ export class AppointmentController {
     }
   }
 
-  async getActiveAppointment(req: Request, res: Response) {
+  async getActiveAppointment(_: Request, res: Response) {
     try {
       const appointments = await AppointmentService.getActiveAppointment();
       return res.status(200).json(appointments);
@@ -35,7 +35,7 @@ export class AppointmentController {
 		}
 	}
 
-  async getHistory(req: Request, res: Response) {
+  async getHistory(_: Request, res: Response) {
     try {
       const appointments = await AppointmentService.getHistory();
       return res.json(appointments);

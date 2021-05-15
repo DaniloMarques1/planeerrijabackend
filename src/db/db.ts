@@ -1,4 +1,4 @@
-import { Client, Pool } from 'pg';
+import { Pool } from 'pg';
 import * as dotenv from 'dotenv';
 
 dotenv.config();
@@ -29,6 +29,8 @@ const tables = `
     pet_type pettype,
     description text,
     active BOOLEAN DEFAULT true,
+    consult_created_date timestamp default now(),
+    consult_over_date timestamp,
     employee_id INT,
     CONSTRAINT fk_employee_id FOREIGN KEY(employee_id) REFERENCES employee(id)
   );
@@ -50,7 +52,6 @@ const pool = new Pool({
     rejectUnauthorized: false
   }
 });
-
 
 async function createTables() {
   //await pool.query(jobType);

@@ -22,7 +22,7 @@ export class AppointmentRepository {
   }
 
   static async inactiveAppoitment(id: number): Promise<Appointment> {
-    return (await pool.query("update appointment set active = false where id = $1 returning *", [id])).rows[0];
+    return (await pool.query("update appointment set active = false, consult_over_date = now() where id = $1 returning *", [id])).rows[0];
   }
 
   static async removeAppointment(id: number) {
